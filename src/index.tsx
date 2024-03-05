@@ -1,9 +1,18 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import App from './pages/landing'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import Landing from './pages/landing'
+import { Nav } from './layouts/Nav'
+import { Footer } from './layouts/Footer'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <App />
+    <Router>
+      <Nav />
+      <Routes>
+        <Route path="/" element={<Landing />} />
+      </Routes>
+      <Footer />
+    </Router>
   </React.StrictMode>
 )
