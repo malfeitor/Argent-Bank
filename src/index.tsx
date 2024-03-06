@@ -5,6 +5,7 @@ import Landing from './pages/landing'
 import { Nav } from './layouts/Nav'
 import { Footer } from './layouts/Footer'
 import { SignIn } from './pages/sign-in'
+import { UserPage } from './pages/user'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
@@ -13,6 +14,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/sign-in" element={<SignIn />} />
+        <Route path="/user" element={<UserPage />} />
       </Routes>
       <Footer />
     </Router>
