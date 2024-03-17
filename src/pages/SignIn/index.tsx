@@ -1,9 +1,15 @@
-import { useAppDispatch } from '../../utils/hooks'
-import { logIn } from '../../features/auth'
+import { useAppDispatch, useAppSelector } from '../../utils/hooks'
+import { logIn, selectAuth } from '../../features/auth'
 import axios from 'axios'
+import { Navigate } from 'react-router-dom'
 
 export function SignIn() {
   const dispatch = useAppDispatch()
+  const auth = useAppSelector(selectAuth)
+  if (auth.token !== '') {
+    return <Navigate to="/user" />
+  }
+
   const handleSubmit = async (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
