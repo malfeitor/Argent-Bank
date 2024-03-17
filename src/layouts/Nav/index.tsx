@@ -1,10 +1,13 @@
 import { Link } from 'react-router-dom'
 import { selectAuth } from '../../features/auth'
 import { useAppSelector } from '../../utils/hooks'
+import { logOut } from '../../features/auth'
+import { useDispatch } from 'react-redux'
 
 export function Nav() {
   const auth = useAppSelector(selectAuth)
   const userConnected = auth.token !== ''
+  const dispatch = useDispatch()
   return (
     <nav className="main-nav">
       <Link className="main-nav-logo" to="/">
@@ -21,7 +24,11 @@ export function Nav() {
             <i className="fa fa-user-circle"></i>
             Tony
           </Link>
-          <Link className="main-nav-item" to="/">
+          <Link
+            className="main-nav-item"
+            to="/"
+            onClick={() => dispatch(logOut())}
+          >
             <i className="fa fa-sign-out"></i>
             Sign Out
           </Link>

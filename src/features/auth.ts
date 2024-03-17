@@ -35,9 +35,12 @@ const { actions, reducer } = createSlice({
     logIn: (draft, action: PayloadAction<LogInPayload>) => {
       draft.token = action.payload
     },
+    logOut: (draft) => {
+      draft.token = ''
+    },
   },
 })
 
-export const { logIn } = actions
+export const { logIn, logOut } = actions
 export const selectAuth = (state: RootState) => state.auth
 export default reducer
