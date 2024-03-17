@@ -34,9 +34,13 @@ const { actions, reducer } = createSlice({
   reducers: {
     logIn: (draft, action: PayloadAction<LogInPayload>) => {
       draft.token = action.payload
+      axios.defaults.headers.common[
+        'Authorization'
+      ] = `Bearer ${action.payload}`
     },
     logOut: (draft) => {
       draft.token = ''
+      axios.defaults.headers.common['Authorization'] = ''
     },
   },
 })
