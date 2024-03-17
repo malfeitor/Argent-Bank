@@ -7,7 +7,7 @@ import Landing from './pages/Landing'
 import { Nav } from './layouts/Nav'
 import { Footer } from './layouts/Footer'
 import { SignIn } from './pages/SignIn'
-import { UserPage } from './pages/UserPage'
+import { UserPage } from './pages/User'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
