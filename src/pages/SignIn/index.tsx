@@ -1,9 +1,12 @@
 import { useAppDispatch } from '../../utils/hooks'
 import { logIn } from '../../features/auth'
+import axios from 'axios'
 
 export function SignIn() {
   const dispatch = useAppDispatch()
-  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const handleSubmit = async (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
     e.preventDefault()
     const emailInput = document.getElementById('username') as HTMLInputElement
     const email = emailInput.value
@@ -11,7 +14,17 @@ export function SignIn() {
       'password'
     ) as HTMLInputElement
     const password = passwordInput.value
-    dispatch(logIn({ email, password }))
+    axios
+      .post('http://localhost:3001/api/v1/user/login', {
+        email,
+        password,
+      })
+      .then((response) => {
+        dispatch(logIn(response.data.body.token))
+      })
+      .catch((error) => {
+        console.log(error)
+      })
   }
   return (
     <main className="main bg-dark">

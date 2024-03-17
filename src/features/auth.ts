@@ -1,20 +1,18 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { RootState } from '../utils/store'
 
-type LogInPayload = {
-  email: string
-  password: string
-}
+type LogInPayload = string
 
-const initialState = {}
+const initialState = {
+  token: '',
+}
 
 const { actions, reducer } = createSlice({
   name: 'auth',
   initialState,
   reducers: {
     logIn: (draft, action: PayloadAction<LogInPayload>) => {
-      console.log(draft)
-      console.log(action)
+      draft.token = action.payload
     },
   },
 })
