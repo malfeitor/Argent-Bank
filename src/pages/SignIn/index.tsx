@@ -1,10 +1,11 @@
-import { useAppDispatch, useAppSelector } from '../../utils/hooks'
-import { logIn, selectAuth } from '../../features/auth'
-import axios from 'axios'
+import { useAppSelector } from '../../utils/hooks'
+import { selectAuth, authenticate } from '../../features/auth'
+
 import { Navigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 
 export function SignIn() {
-  const dispatch = useAppDispatch()
+  const dispatch = useDispatch()
   const auth = useAppSelector(selectAuth)
   if (auth.token !== '') {
     return <Navigate to="/user" />
@@ -14,23 +15,11 @@ export function SignIn() {
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     e.preventDefault()
-    const emailInput = document.getElementById('username') as HTMLInputElement
-    const email = emailInput.value
-    const passwordInput = document.getElementById(
-      'password'
-    ) as HTMLInputElement
-    const password = passwordInput.value
-    axios
-      .post('http://localhost:3001/api/v1/user/login', {
-        email,
-        password,
-      })
-      .then((response) => {
-        dispatch(logIn(response.data.body.token))
-      })
-      .catch((error) => {
-        console.log(error)
-      })
+    const email = (document.getElementById('username') as HTMLInputElement)
+      .value
+    const password = (document.getElementById('password') as HTMLInputElement)
+      .value
+    authenticate({ email, password, dispatch })
   }
   return (
     <main className="main bg-dark">
