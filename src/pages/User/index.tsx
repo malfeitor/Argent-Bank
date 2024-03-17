@@ -1,4 +1,13 @@
+import { useAppSelector } from '../../utils/hooks'
+import { selectAuth } from '../../features/auth'
+import { Navigate } from 'react-router-dom'
+
 export function UserPage() {
+  const auth = useAppSelector(selectAuth)
+  if (auth.token === '') {
+    return <Navigate to="/sign-in" />
+  }
+
   return (
     <main className="main bg-dark">
       <div className="header">
