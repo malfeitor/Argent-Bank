@@ -1,4 +1,18 @@
+import { useAppDispatch } from '../../utils/hooks'
+import { logIn } from '../../features/auth'
+
 export function SignIn() {
+  const dispatch = useAppDispatch()
+  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault()
+    const emailInput = document.getElementById('username') as HTMLInputElement
+    const email = emailInput.value
+    const passwordInput = document.getElementById(
+      'password'
+    ) as HTMLInputElement
+    const password = passwordInput.value
+    dispatch(logIn({ email, password }))
+  }
   return (
     <main className="main bg-dark">
       <section className="sign-in-content">
@@ -18,7 +32,9 @@ export function SignIn() {
             <label htmlFor="remember-me">Remember me</label>
           </div>
 
-          <button className="sign-in-button">Sign In</button>
+          <button className="sign-in-button" onClick={(e) => handleSubmit(e)}>
+            Sign In
+          </button>
         </form>
       </section>
     </main>
