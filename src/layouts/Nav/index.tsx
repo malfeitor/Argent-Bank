@@ -1,13 +1,18 @@
 import { Link } from 'react-router-dom'
-import { selectAuth } from '../../features/auth'
-import { useAppSelector } from '../../utils/hooks'
-import { logOut } from '../../features/auth'
 import { useDispatch } from 'react-redux'
+import { useAppSelector } from '../../utils/hooks'
+import { selectAuth, logOut } from '../../features/auth'
+import { selectProfile, cleanProfile } from '../../features/profile'
 
 export function Nav() {
-  const auth = useAppSelector(selectAuth)
-  const userConnected = auth.token !== ''
   const dispatch = useDispatch()
+  const auth = useAppSelector(selectAuth)
+  const profile = useAppSelector(selectProfile)
+  const userConnected = auth.token !== ''
+  function handleSignOut() {
+    dispatch(logOut())
+    dispatch(cleanProfile())
+  }
   return (
     <nav className="main-nav">
       <Link className="main-nav-logo" to="/">
@@ -22,12 +27,12 @@ export function Nav() {
         <div>
           <Link className="main-nav-item" to="/user">
             <i className="fa fa-user-circle"></i>
-            Tony
+            {profile.firstName}
           </Link>
           <Link
             className="main-nav-item"
             to="/"
-            onClick={() => dispatch(logOut())}
+            onClick={() => handleSignOut()}
           >
             <i className="fa fa-sign-out"></i>
             Sign Out
