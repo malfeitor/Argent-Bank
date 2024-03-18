@@ -2,16 +2,20 @@ import { useAppSelector } from '../../utils/hooks'
 import { selectAuth } from '../../features/auth'
 import { Navigate } from 'react-router-dom'
 import { fetchProfile, selectProfile } from '../../features/profile'
-import { useDispatch } from 'react-redux'
+import { useAppDispatch } from '../../utils/hooks'
+import { useEffect } from 'react'
 
 export function UserPage() {
+  const dispatch = useAppDispatch()
   const auth = useAppSelector(selectAuth)
-  const dispatch = useDispatch()
   const profile = useAppSelector(selectProfile)
+  useEffect(() => {
+    dispatch(fetchProfile())
+  }, [dispatch])
+
   if (auth.token === '') {
     return <Navigate to="/sign-in" />
   }
-  fetchProfile(dispatch)
 
   return (
     <main className="main bg-dark">
