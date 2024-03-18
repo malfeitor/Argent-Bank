@@ -1,12 +1,17 @@
 import { useAppSelector } from '../../utils/hooks'
 import { selectAuth } from '../../features/auth'
 import { Navigate } from 'react-router-dom'
+import { fetchProfile, selectProfile } from '../../features/profile'
+import { useDispatch } from 'react-redux'
 
 export function UserPage() {
   const auth = useAppSelector(selectAuth)
+  const dispatch = useDispatch()
+  const profile = useAppSelector(selectProfile)
   if (auth.token === '') {
     return <Navigate to="/sign-in" />
   }
+  fetchProfile(dispatch)
 
   return (
     <main className="main bg-dark">
@@ -14,7 +19,7 @@ export function UserPage() {
         <h1>
           Welcome back
           <br />
-          Tony Jarvis!
+          {`${profile.firstName} ${profile.lastName}!`}
         </h1>
         <button className="edit-button">Edit Name</button>
       </div>
