@@ -3,10 +3,14 @@ import { selectAuth, authenticate } from '../../features/auth'
 
 import { Navigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
+import { useRef } from 'react'
 
 export function SignIn() {
   const dispatch = useDispatch()
   const auth = useAppSelector(selectAuth)
+  const email = useRef<HTMLInputElement>(null)
+  const password = useRef<HTMLInputElement>(null)
+  const remember = useRef<HTMLInputElement>(null)
   if (auth.token !== '') {
     return <Navigate to="/user" />
   }
@@ -15,11 +19,11 @@ export function SignIn() {
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     e.preventDefault()
-    const email = (document.getElementById('username') as HTMLInputElement)
-      .value
-    const password = (document.getElementById('password') as HTMLInputElement)
-      .value
-    authenticate({ email, password, dispatch })
+    authenticate({
+      email: email!.current!.value,
+      password: password!.current!.value,
+      dispatch,
+    })
   }
   return (
     <main className="main bg-dark">
@@ -29,14 +33,14 @@ export function SignIn() {
         <form>
           <div className="input-wrapper">
             <label htmlFor="username">Username</label>
-            <input type="text" id="username" />
+            <input type="text" id="username" ref={email} />
           </div>
           <div className="input-wrapper">
             <label htmlFor="password">Password</label>
-            <input type="password" id="password" />
+            <input type="password" id="password" ref={password} />
           </div>
           <div className="input-remember">
-            <input type="checkbox" id="remember-me" />
+            <input type="checkbox" id="remember-me" ref={remember} />
             <label htmlFor="remember-me">Remember me</label>
           </div>
 
