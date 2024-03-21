@@ -7,6 +7,7 @@ type PayloadResolved = {
   email: string
   firstName: string
   lastName: string
+  editing: boolean
 }
 
 const initialState = {
@@ -16,6 +17,7 @@ const initialState = {
   email: '',
   firstName: '',
   lastName: '',
+  editing: false,
 }
 
 const { actions, reducer } = createSlice({
@@ -48,6 +50,12 @@ const { actions, reducer } = createSlice({
     cleanProfile: () => {
       return initialState
     },
+    startEditing: (draft) => {
+      draft.editing = true
+    },
+    stopEditing: (draft) => {
+      draft.editing = false
+    },
   },
 })
 
@@ -68,6 +76,6 @@ export const fetchProfile = () => {
   }
 }
 
-export const { cleanProfile } = actions
+export const { cleanProfile, startEditing, stopEditing } = actions
 export const selectProfile = (state: RootState) => state.profile
 export default reducer
