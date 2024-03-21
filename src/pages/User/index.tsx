@@ -1,11 +1,10 @@
 import { useAppSelector } from '../../utils/hooks'
 import { selectAuth } from '../../features/auth'
 import { Navigate } from 'react-router-dom'
-import { selectProfile } from '../../features/profile'
+import { Greeter } from '../../layouts/Greeter'
 
 export function UserPage() {
   const auth = useAppSelector(selectAuth)
-  const profile = useAppSelector(selectProfile)
 
   if (auth.token === '') {
     return <Navigate to="/sign-in" />
@@ -13,14 +12,7 @@ export function UserPage() {
 
   return (
     <main className="main bg-dark">
-      <div className="header">
-        <h1>
-          Welcome back
-          <br />
-          {`${profile.firstName} ${profile.lastName}!`}
-        </h1>
-        <button className="edit-button">Edit Name</button>
-      </div>
+      <Greeter />
       <h2 className="sr-only">Accounts</h2>
       <section className="account">
         <div className="account-content-wrapper">
