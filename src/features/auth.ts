@@ -25,20 +25,18 @@ export function setAxiosDefaultAuthHeader(token: string) {
   axios.defaults.headers.common['Authorization'] = token
 }
 
-export const axiosAuthMiddleware: Middleware =
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  (store) => (next) => (action) => {
-    if (isAction(action) && isHydrateAction(action)) {
-      setAxiosDefaultAuthHeader(`Bearer ${action.payload.token}`)
-    }
-    if (logIn.match(action)) {
-      setAxiosDefaultAuthHeader(`Bearer ${action.payload}`)
-    }
-    if (logOut.match(action)) {
-      setAxiosDefaultAuthHeader('')
-    }
-    return next(action)
+export const axiosAuthMiddleware: Middleware = () => (next) => (action) => {
+  if (isAction(action) && isHydrateAction(action)) {
+    setAxiosDefaultAuthHeader(`Bearer ${action.payload.token}`)
   }
+  if (logIn.match(action)) {
+    setAxiosDefaultAuthHeader(`Bearer ${action.payload}`)
+  }
+  if (logOut.match(action)) {
+    setAxiosDefaultAuthHeader('')
+  }
+  return next(action)
+}
 
 export async function authenticate(credentials: Credentials) {
   const { email, password, rememberToken, dispatch } = credentials
