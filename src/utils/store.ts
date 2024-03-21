@@ -11,7 +11,7 @@ import {
 import storage from 'redux-persist/lib/storage'
 import persistStore from 'redux-persist/lib/persistStore'
 import { PersistPartial } from 'redux-persist/lib/persistReducer'
-import authReducer, { authMiddleware } from '../features/auth'
+import authReducer, { axiosAuthMiddleware } from '../features/auth'
 import profileReducer from '../features/profile'
 
 const authPersistConfig = {
@@ -32,7 +32,7 @@ export const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }).concat(authMiddleware),
+    }).concat(axiosAuthMiddleware),
 })
 
 export const persistor = persistStore(store)

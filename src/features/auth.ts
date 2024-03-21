@@ -6,6 +6,7 @@ import {
 } from '@reduxjs/toolkit'
 import { persistor, RootState } from '../utils/store'
 import axios from 'axios'
+import { REHYDRATE } from 'redux-persist'
 
 type LogInPayload = string
 type Credentials = {
@@ -23,13 +24,20 @@ export function setAxiosDefaultAuthHeader(token: string) {
   axios.defaults.headers.common['Authorization'] = token
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export const authMiddleware: Middleware = (store) => (next) => (action) => {
-  if (typeof action?.type === 'string' && action.type === 'persist/REHYDRATE') {
-    setAxiosDefaultAuthHeader(`Bearer ${action.payload.token}`)
+export const axiosAuthMiddleware: Middleware =
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  (store) => (next) => (action) => {
+    if (action.type === REHYDRATE) {
+      setAxiosDefaultAuthHeader(`Bearer ${action.payload.token}`)
+    }
+    if (action.type === logIn.type) {
+      setAxiosDefaultAuthHeader(`Bearer ${action.payload}`)
+    }
+    if (action.type === logOut) {
+      setAxiosDefaultAuthHeader('')
+    }
+    return next(action)
   }
-  return next(action)
-}
 
 export async function authenticate(credentials: Credentials) {
   const { email, password, rememberToken, dispatch } = credentials
@@ -43,7 +51,6 @@ export async function authenticate(credentials: Credentials) {
         persistor.pause()
       }
       dispatch(logIn(response.data.body.token))
-      setAxiosDefaultAuthHeader(`Bearer ${response.data.body.token}`)
     })
     .catch((error) => {
       console.log(error)
