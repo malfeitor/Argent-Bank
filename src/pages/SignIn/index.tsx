@@ -10,6 +10,7 @@ export function SignIn() {
   const email = useRef<HTMLInputElement>(null)
   const password = useRef<HTMLInputElement>(null)
   const remember = useRef<HTMLInputElement>(null)
+
   if (auth.token !== '') {
     return <Navigate to="/user" />
   }
