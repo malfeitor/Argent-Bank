@@ -18,23 +18,6 @@ const initialState = {
   lastName: '',
 }
 
-export const fetchProfile = () => {
-  return (dispatch: Dispatch, getState: () => RootState) => {
-    const status = selectProfile(getState()).status
-    if (status !== 'pending' && status !== 'updating') {
-      dispatch(actions.fetching())
-      axios
-        .post('http://localhost:3001/api/v1/user/profile')
-        .then((response) => {
-          dispatch(actions.resolved(response.data.body))
-        })
-        .catch((error) => {
-          dispatch(actions.rejected(error.message))
-        })
-    }
-  }
-}
-
 const { actions, reducer } = createSlice({
   name: 'profile',
   initialState,
@@ -67,6 +50,23 @@ const { actions, reducer } = createSlice({
     },
   },
 })
+
+export const fetchProfile = () => {
+  return (dispatch: Dispatch, getState: () => RootState) => {
+    const status = selectProfile(getState()).status
+    if (status !== 'pending' && status !== 'updating') {
+      dispatch(actions.fetching())
+      axios
+        .post('http://localhost:3001/api/v1/user/profile')
+        .then((response) => {
+          dispatch(actions.resolved(response.data.body))
+        })
+        .catch((error) => {
+          dispatch(actions.rejected(error.message))
+        })
+    }
+  }
+}
 
 export const { cleanProfile } = actions
 export const selectProfile = (state: RootState) => state.profile
