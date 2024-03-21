@@ -1,5 +1,13 @@
 import { Reducer, UnknownAction, configureStore } from '@reduxjs/toolkit'
-import { persistReducer } from 'redux-persist'
+import {
+  persistReducer,
+  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+} from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 import persistStore from 'redux-persist/lib/persistStore'
 import { PersistPartial } from 'redux-persist/lib/persistReducer'
@@ -20,7 +28,11 @@ export const store = configureStore({
     profile: profileReducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(authMiddleware),
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    }).concat(authMiddleware),
 })
 
 export const persistor = persistStore(store)
