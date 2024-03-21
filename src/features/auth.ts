@@ -12,7 +12,7 @@ type Credentials = {
   dispatch: Dispatch
   email: string
   password: string
-  saveToken: boolean
+  rememberToken: boolean
 }
 
 const initialState = {
@@ -32,14 +32,14 @@ export const authMiddleware: Middleware = (store) => (next) => (action) => {
 }
 
 export async function authenticate(credentials: Credentials) {
-  const { email, password, saveToken, dispatch } = credentials
+  const { email, password, rememberToken, dispatch } = credentials
   await axios
     .post('http://localhost:3001/api/v1/user/login', {
       email,
       password,
     })
     .then((response) => {
-      if (!saveToken) {
+      if (!rememberToken) {
         persistor.pause()
       }
       dispatch(logIn(response.data.body.token))

@@ -21,7 +21,7 @@ export function SignIn() {
     await authenticate({
       email: email!.current!.value,
       password: password!.current!.value,
-      saveToken: remember!.current!.checked,
+      rememberToken: remember!.current!.checked,
       dispatch,
     })
   }
