@@ -1,12 +1,13 @@
 import {
   createSlice,
   Dispatch,
+  isAction,
   Middleware,
   PayloadAction,
 } from '@reduxjs/toolkit'
 import { persistor, RootState } from '../utils/store'
 import axios from 'axios'
-import { REHYDRATE } from 'redux-persist'
+import { isHydrateAction } from '../utils/types'
 
 type LogInPayload = string
 type Credentials = {
@@ -27,13 +28,13 @@ export function setAxiosDefaultAuthHeader(token: string) {
 export const axiosAuthMiddleware: Middleware =
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   (store) => (next) => (action) => {
-    if (action.type === REHYDRATE) {
+    if (isAction(action) && isHydrateAction(action)) {
       setAxiosDefaultAuthHeader(`Bearer ${action.payload.token}`)
     }
-    if (action.type === logIn.type) {
+    if (logIn.match(action)) {
       setAxiosDefaultAuthHeader(`Bearer ${action.payload}`)
     }
-    if (action.type === logOut) {
+    if (logOut.match(action)) {
       setAxiosDefaultAuthHeader('')
     }
     return next(action)
