@@ -1,10 +1,6 @@
 import { Link } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks'
-import {
-  selectAuth,
-  logOut,
-  setAxiosDefaultAuthHeader,
-} from '../../features/auth'
+import { selectAuth, logOut } from '../../features/auth'
 import {
   selectProfile,
   cleanProfile,
@@ -19,7 +15,6 @@ export function Nav() {
   const userConnected = auth.token !== ''
   function handleSignOut() {
     dispatch(logOut())
-    setAxiosDefaultAuthHeader('')
     dispatch(cleanProfile())
   }
   useEffect(() => {

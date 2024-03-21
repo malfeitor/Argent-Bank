@@ -20,19 +20,17 @@ const initialState = {
   token: '',
 }
 
-export function setAxiosDefaultAuthHeader(token: string) {
-  axios.defaults.headers.common['Authorization'] = token
-}
-
 export const axiosAuthMiddleware: Middleware = () => (next) => (action) => {
   if (isAction(action) && isHydrateAction(action)) {
-    setAxiosDefaultAuthHeader(`Bearer ${action.payload.token}`)
+    axios.defaults.headers.common[
+      'Authorization'
+    ] = `Bearer ${action.payload.token}`
   }
   if (logIn.match(action)) {
-    setAxiosDefaultAuthHeader(`Bearer ${action.payload}`)
+    axios.defaults.headers.common['Authorization'] = `Bearer ${action.payload}`
   }
   if (logOut.match(action)) {
-    setAxiosDefaultAuthHeader('')
+    axios.defaults.headers.common['Authorization'] = ''
   }
   return next(action)
 }
