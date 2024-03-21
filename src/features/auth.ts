@@ -9,7 +9,6 @@ import { persistor, RootState } from '../utils/store'
 import axios from 'axios'
 import { isHydrateAction } from '../utils/types'
 
-type LogInPayload = string
 type Credentials = {
   dispatch: Dispatch
   email: string
@@ -60,7 +59,7 @@ const { actions, reducer } = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    logIn: (draft, action: PayloadAction<LogInPayload>) => {
+    logIn: (draft, action: PayloadAction<string>) => {
       draft.token = action.payload
     },
     logOut: (draft) => {
