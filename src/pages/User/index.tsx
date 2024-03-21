@@ -1,17 +1,11 @@
 import { useAppSelector } from '../../utils/hooks'
 import { selectAuth } from '../../features/auth'
 import { Navigate } from 'react-router-dom'
-import { fetchProfile, selectProfile } from '../../features/profile'
-import { useAppDispatch } from '../../utils/hooks'
-import { useEffect } from 'react'
+import { selectProfile } from '../../features/profile'
 
 export function UserPage() {
-  const dispatch = useAppDispatch()
   const auth = useAppSelector(selectAuth)
   const profile = useAppSelector(selectProfile)
-  useEffect(() => {
-    dispatch(fetchProfile())
-  }, [dispatch])
 
   if (auth.token === '') {
     return <Navigate to="/sign-in" />

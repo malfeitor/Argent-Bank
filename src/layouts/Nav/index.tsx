@@ -1,15 +1,19 @@
 import { Link } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
-import { useAppSelector } from '../../utils/hooks'
+import { useAppDispatch, useAppSelector } from '../../utils/hooks'
 import {
   selectAuth,
   logOut,
   setAxiosDefaultAuthHeader,
 } from '../../features/auth'
-import { selectProfile, cleanProfile } from '../../features/profile'
+import {
+  selectProfile,
+  cleanProfile,
+  fetchProfile,
+} from '../../features/profile'
+import { useEffect } from 'react'
 
 export function Nav() {
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const auth = useAppSelector(selectAuth)
   const profile = useAppSelector(selectProfile)
   const userConnected = auth.token !== ''
@@ -18,6 +22,11 @@ export function Nav() {
     setAxiosDefaultAuthHeader('')
     dispatch(cleanProfile())
   }
+  useEffect(() => {
+    if (auth.token !== '') {
+      dispatch(fetchProfile())
+    }
+  }, [auth.token, dispatch])
   return (
     <nav className="main-nav">
       <Link className="main-nav-logo" to="/">
