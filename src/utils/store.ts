@@ -1,8 +1,9 @@
-import { configureStore } from '@reduxjs/toolkit'
+import { Reducer, UnknownAction, configureStore } from '@reduxjs/toolkit'
 import { persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 import persistStore from 'redux-persist/lib/persistStore'
-import authReducer from '../features/auth'
+import { PersistPartial } from 'redux-persist/lib/persistReducer'
+import authReducer, { authMiddleware } from '../features/auth'
 import profileReducer from '../features/profile'
 
 const authPersistConfig = {
@@ -12,9 +13,14 @@ const authPersistConfig = {
 
 export const store = configureStore({
   reducer: {
-    auth: persistReducer(authPersistConfig, authReducer),
+    auth: persistReducer(authPersistConfig, authReducer) as Reducer<
+      { token: string } & PersistPartial,
+      UnknownAction
+    >,
     profile: profileReducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(authMiddleware),
 })
 
 export const persistor = persistStore(store)

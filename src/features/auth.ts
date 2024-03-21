@@ -23,6 +23,14 @@ export function setAxiosDefaultAuthHeader(token: string) {
   axios.defaults.headers.common['Authorization'] = token
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export const authMiddleware: Middleware = (store) => (next) => (action) => {
+  if (typeof action?.type === 'string' && action.type === 'persist/REHYDRATE') {
+    setAxiosDefaultAuthHeader(`Bearer ${action.payload.token}`)
+  }
+  return next(action)
+}
+
 export async function authenticate(credentials: Credentials) {
   const { email, password, saveToken, dispatch } = credentials
   await axios
