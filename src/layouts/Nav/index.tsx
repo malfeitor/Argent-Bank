@@ -3,7 +3,7 @@ import { SignOut } from '../../components/SignOut'
 import { SignIn } from '../../components/SignIn'
 import { selectAuth } from '../../features/auth'
 import { useAppSelector } from '../../utils/hooks'
-import { Profile } from '../../components/Profile'
+import { ProfileLink } from '../../components/ProfileLink'
 
 export function Nav() {
   const auth = useAppSelector(selectAuth)
@@ -14,7 +14,7 @@ export function Nav() {
       <Logo />
       {userConnected ? (
         <div>
-          <Profile />
+          <ProfileLink />
           <SignOut />
         </div>
       ) : (

@@ -4,7 +4,7 @@ import { fetchProfile, selectProfile } from '../../features/profile'
 import { selectAuth } from '../../features/auth'
 import { useEffect } from 'react'
 
-export function Profile() {
+export function ProfileLink() {
   const dispatch = useAppDispatch()
   const profile = useAppSelector(selectProfile)
   const auth = useAppSelector(selectAuth)
