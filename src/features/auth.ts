@@ -20,21 +20,6 @@ const initialState = {
   token: '',
 }
 
-export const axiosAuthMiddleware: Middleware = () => (next) => (action) => {
-  if (isAction(action) && isHydrateAction(action)) {
-    axios.defaults.headers.common[
-      'Authorization'
-    ] = `Bearer ${action.payload.token}`
-  }
-  if (logIn.match(action)) {
-    axios.defaults.headers.common['Authorization'] = `Bearer ${action.payload}`
-  }
-  if (logOut.match(action)) {
-    axios.defaults.headers.common['Authorization'] = ''
-  }
-  return next(action)
-}
-
 export async function authenticate(credentials: Credentials) {
   const { email, password, rememberToken, dispatch } = credentials
   await axios
@@ -65,6 +50,21 @@ const { actions, reducer } = createSlice({
     },
   },
 })
+
+export const axiosAuthMiddleware: Middleware = () => (next) => (action) => {
+  if (isAction(action) && isHydrateAction(action)) {
+    axios.defaults.headers.common[
+      'Authorization'
+    ] = `Bearer ${action.payload.token}`
+  }
+  if (logIn.match(action)) {
+    axios.defaults.headers.common['Authorization'] = `Bearer ${action.payload}`
+  }
+  if (logOut.match(action)) {
+    axios.defaults.headers.common['Authorization'] = ''
+  }
+  return next(action)
+}
 
 export const { logIn, logOut } = actions
 export const selectAuth = (state: RootState) => state.auth
