@@ -1,7 +1,11 @@
 import { Link } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { useAppSelector } from '../../utils/hooks'
-import { selectAuth, logOut } from '../../features/auth'
+import {
+  selectAuth,
+  logOut,
+  setAxiosDefaultAuthHeader,
+} from '../../features/auth'
 import { selectProfile, cleanProfile } from '../../features/profile'
 
 export function Nav() {
@@ -11,6 +15,7 @@ export function Nav() {
   const userConnected = auth.token !== ''
   function handleSignOut() {
     dispatch(logOut())
+    setAxiosDefaultAuthHeader('')
     dispatch(cleanProfile())
   }
   return (

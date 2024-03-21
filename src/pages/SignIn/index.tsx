@@ -1,12 +1,11 @@
 import { useAppSelector } from '../../utils/hooks'
 import { selectAuth, authenticate } from '../../features/auth'
-
 import { Navigate } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import { useAppDispatch } from '../../utils/hooks'
 import { useRef } from 'react'
 
 export function SignIn() {
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const auth = useAppSelector(selectAuth)
   const email = useRef<HTMLInputElement>(null)
   const password = useRef<HTMLInputElement>(null)
@@ -19,9 +18,10 @@ export function SignIn() {
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     e.preventDefault()
-    authenticate({
+    await authenticate({
       email: email!.current!.value,
       password: password!.current!.value,
+      saveToken: remember!.current!.checked,
       dispatch,
     })
   }
