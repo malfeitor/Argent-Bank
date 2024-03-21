@@ -1,6 +1,7 @@
 import './index.scss'
 import { selectProfile, startEditing } from '../../features/profile'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks'
+import { EditName } from '../../components/EditName'
 
 export function Greeter() {
   const dispatch = useAppDispatch()
@@ -23,7 +24,7 @@ export function Greeter() {
           </button>
         </>
       ) : (
-        <></>
+        <EditName />
       )}
     </div>
   )
