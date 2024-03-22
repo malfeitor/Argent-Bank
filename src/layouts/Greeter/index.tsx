@@ -1,11 +1,20 @@
 import './index.scss'
-import { selectProfile, startEditing } from '../../features/profile'
+import {
+  selectProfile,
+  startEditing,
+  stopEditing,
+} from '../../features/profile'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks'
 import { EditName } from '../../components/EditName'
+import { useEffect } from 'react'
 
 export function Greeter() {
   const dispatch = useAppDispatch()
   const profile = useAppSelector(selectProfile)
+
+  useEffect(() => {
+    dispatch(stopEditing())
+  }, [dispatch])
 
   function showEditForm() {
     dispatch(startEditing())
