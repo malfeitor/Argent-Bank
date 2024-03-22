@@ -2,7 +2,7 @@ import { createSlice, Dispatch, PayloadAction } from '@reduxjs/toolkit'
 import { RootState } from '../utils/store'
 import axios from 'axios'
 
-type PayloadResolved = {
+type FetchResolved = {
   id: string
   email: string
   firstName: string
@@ -41,7 +41,7 @@ const { actions, reducer } = createSlice({
         draft.status = 'updating'
       }
     },
-    resolved: (draft, action: PayloadAction<PayloadResolved>) => {
+    resolved: (draft, action: PayloadAction<FetchResolved>) => {
       draft.status = 'resolved'
       draft.id = action.payload.id
       draft.email = action.payload.email
