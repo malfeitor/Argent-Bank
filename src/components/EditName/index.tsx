@@ -1,8 +1,28 @@
 import { selectProfile } from '../../features/profile'
-import { useAppSelector } from '../../utils/hooks'
+import { useAppDispatch, useAppSelector } from '../../utils/hooks'
+import { setProfileNames, stopEditing } from '../../features/profile'
 
 export function EditName() {
   const profile = useAppSelector(selectProfile)
+  const dispatch = useAppDispatch()
 
-  return <div>{`${profile.firstName} ${profile.lastName}!`}</div>
+  function saveProfile() {
+    dispatch(setProfileNames({ firstName: 'Tony', lastName: 'Stark' }))
+    dispatch(stopEditing())
+  }
+
+  return (
+    <div>
+      {`${profile.firstName} ${profile.lastName}!`}
+      <button
+        className="edit-button"
+        onClick={() => {
+          saveProfile()
+        }}
+      >
+        Save
+      </button>
+      <button className="edit-button">Cancel</button>
+    </div>
+  )
 }
