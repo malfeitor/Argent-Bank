@@ -10,6 +10,11 @@ type PayloadResolved = {
   editing: boolean
 }
 
+type SetProfileNames = {
+  firstName: string
+  lastName: string
+}
+
 const initialState = {
   status: 'void',
   error: '',
@@ -66,6 +71,26 @@ export const fetchProfile = () => {
       dispatch(actions.fetching())
       axios
         .post('http://localhost:3001/api/v1/user/profile')
+        .then((response) => {
+          dispatch(actions.resolved(response.data.body))
+        })
+        .catch((error) => {
+          dispatch(actions.rejected(error.message))
+        })
+    }
+  }
+}
+
+export const setProfileNames = ({ firstName, lastName }: SetProfileNames) => {
+  return (dispatch: Dispatch, getState: () => RootState) => {
+    const status = selectProfile(getState()).status
+    if (status !== 'pending' && status !== 'updating') {
+      dispatch(actions.fetching())
+      axios
+        .put('http://localhost:3001/api/v1/user/profile', {
+          firstName,
+          lastName,
+        })
         .then((response) => {
           dispatch(actions.resolved(response.data.body))
         })
