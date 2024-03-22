@@ -2,6 +2,7 @@ import { selectProfile } from '../../features/profile'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks'
 import { setProfileNames, stopEditing } from '../../features/profile'
 import { useRef } from 'react'
+import './index.scss'
 
 export function EditName() {
   const profile = useAppSelector(selectProfile)
@@ -26,18 +27,31 @@ export function EditName() {
   }
 
   return (
-    <div>
-      <input type="text" ref={firstNameRef} placeholder={profile.firstName} />
-      <input type="text" ref={lastNameRef} placeholder={profile.lastName} />
+    <div className="edit-name">
+      <input
+        className="edit-name__input"
+        type="text"
+        ref={firstNameRef}
+        placeholder={profile.firstName}
+      />
+      <input
+        className="edit-name__input"
+        type="text"
+        ref={lastNameRef}
+        placeholder={profile.lastName}
+      />
       <button
-        className="edit-button"
+        className="edit-button edit-name__button"
         onClick={() => {
           saveProfile()
         }}
       >
         Save
       </button>
-      <button className="edit-button" onClick={() => cancel()}>
+      <button
+        className="edit-button edit-name__button"
+        onClick={() => cancel()}
+      >
         Cancel
       </button>
     </div>
