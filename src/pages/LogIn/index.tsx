@@ -4,7 +4,7 @@ import { Navigate } from 'react-router-dom'
 import { useAppDispatch } from '../../utils/hooks'
 import { useRef } from 'react'
 
-export function SignIn() {
+export function LogIn() {
   const dispatch = useAppDispatch()
   const auth = useAppSelector(selectAuth)
   const email = useRef<HTMLInputElement>(null)

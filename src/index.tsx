@@ -7,7 +7,7 @@ import { persistor, store } from './utils/store'
 import Landing from './pages/Landing'
 import { Nav } from './layouts/Nav'
 import { Footer } from './layouts/Footer'
-import { SignIn } from './pages/SignIn'
+import { LogIn } from './pages/LogIn'
 import { UserPage } from './pages/User'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
@@ -18,7 +18,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
           <Nav />
           <Routes>
             <Route path="/" element={<Landing />} />
-            <Route path="/sign-in" element={<SignIn />} />
+            <Route path="/sign-in" element={<LogIn />} />
             <Route path="/user" element={<UserPage />} />
           </Routes>
           <Footer />
