@@ -1,17 +1,16 @@
-# Project #10 - Argent Bank API
+# Project #13 - Argent Bank
 
-This codebase contains the code needed to run the backend for Argent Bank.
+Code du projet 13 de la formation React d'OpenClassroom. \
+J'ai utilisé SASS, TypeScript, React, Redux, React-Persist, Axios et Swagger.
 
-## Getting Started
+## Pour le reproduire
 
-### Prerequisites
-
-Argent Bank uses the following tech stack:
+### Pré-requis
 
 - [Node.js v12](https://nodejs.org/en/)
 - [MongoDB Community Server](https://www.mongodb.com/try/download/community)
 
-Please make sure you have the right versions and download both packages. You can verify this by using the following commands in your terminal:
+Vérifiez que vous avez les bonnes versions de Node et MongoDB avec les commandes suivantes:
 
 ```bash
 # Check Node.js version
@@ -23,27 +22,15 @@ mongo --version
 
 ### Instructions
 
-1. Fork this repo
-1. Clone the repo onto your computer
-1. Open a terminal window in the cloned project
-1. Run the following commands:
+1. Clonez ce repo sur votre ordinateur
+1. Lancez votre terminal
+1. Installez les dépendences : `npm install`
+1. Lancez le backend : `npm run dev:server`
+1. Peuplez la base de données : `npm run populate-db`
+1. Démarrez le frontend : `npm run dev:front`
+1. Lancez votre navigateur sur la page d'accueil : [http://localhost:4000](http://localhost:4000)
 
-```bash
-# Install dependencies
-npm install
-
-# Start local dev server
-npm run dev:server
-
-# Populate database with two users
-npm run populate-db
-```
-
-Your server should now be running at http://locahost:3001 and you will now have two users in your MongoDB database!
-
-## Populated Database Data
-
-Once you run the `populate-db` script, you should have two users in your database:
+## Les utilisateurs par défaut
 
 ### Tony Stark
 
@@ -59,14 +46,20 @@ Once you run the `populate-db` script, you should have two users in your databas
 - Email: `steve@rogers.com`,
 - Password: `password456`
 
-## API Documentation
+## Captures d'écran
 
-To learn more about how the API works, once you have started your local environment, you can visit: http://localhost:3001/api-docs
+### Page d'accueil
 
-## Design Assets
+![capture d'écran de la page d'accueil](./docs/landing.png)
 
-Static HTML and CSS has been created for most of the site and is located in: `/designs`.
+### Page de connexion
 
-For some of the dynamic features, like toggling user editing, there is a mock-up for it in `/designs/wireframes/edit-user-name.png`.
+![capture d'écran de la page de connexion](./docs/sign-in.png)
 
-And for the API model that you will be proposing for transactitons, the wireframe can be found in `/designs/wireframes/transactions.png`.
+### Page d'utilisateur
+
+![capture d'écran de la page d'utilisateur](./docs/user.png)
+
+### Edition du nom d'utilisateur
+
+![capture d'écran de l'édition du nom de l'utilisateur](./docs/edit.png)
