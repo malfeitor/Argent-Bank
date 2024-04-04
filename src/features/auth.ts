@@ -53,9 +53,11 @@ const { actions, reducer } = createSlice({
 
 export const axiosAuthMiddleware: Middleware = () => (next) => (action) => {
   if (isAction(action) && isHydrateAction(action)) {
-    axios.defaults.headers.common[
-      'Authorization'
-    ] = `Bearer ${action.payload.token}`
+    if (action.payload && action.payload.token) {
+      axios.defaults.headers.common[
+        'Authorization'
+      ] = `Bearer ${action.payload.token}`
+    }
   }
   if (logIn.match(action)) {
     axios.defaults.headers.common['Authorization'] = `Bearer ${action.payload}`
