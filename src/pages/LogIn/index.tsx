@@ -1,8 +1,8 @@
 import { useAppSelector } from '../../utils/hooks'
-import { selectAuth, authenticate } from '../../features/auth'
+import { selectAuth, authenticate, hideError } from '../../features/auth'
 import { Navigate } from 'react-router-dom'
 import { useAppDispatch } from '../../utils/hooks'
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
 
 export function LogIn() {
   const dispatch = useAppDispatch()
@@ -10,11 +10,13 @@ export function LogIn() {
   const email = useRef<HTMLInputElement>(null)
   const password = useRef<HTMLInputElement>(null)
   const remember = useRef<HTMLInputElement>(null)
+  useEffect(() => {
+    dispatch(hideError())
+  }, [dispatch])
 
   if (auth.token !== '') {
     return <Navigate to="/user" />
   }
-
   const handleSubmit = async (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
