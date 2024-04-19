@@ -44,7 +44,11 @@ export function LogIn() {
             <input type="checkbox" id="remember-me" ref={remember} />
             <label htmlFor="remember-me">Remember me</label>
           </div>
-
+          {auth.loginFailed ? (
+            <div className="sign-in-error">Username or Password is wrong.</div>
+          ) : (
+            ''
+          )}
           <button className="sign-in-button" onClick={(e) => handleSubmit(e)}>
             Sign In
           </button>
