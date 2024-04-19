@@ -35,7 +35,7 @@ export async function authenticate(credentials: Credentials) {
       dispatch(logIn(response.data.body.token))
     })
     .catch((error) => {
-      dispatch(logFailed())
+      dispatch(showError())
       console.log(error)
     })
 }
@@ -51,7 +51,7 @@ const { actions, reducer } = createSlice({
     logOut: (draft) => {
       draft.token = ''
     },
-    logFailed: (draft) => {
+    showError: (draft) => {
       draft.loginFailed = true
     },
   },
@@ -74,6 +74,6 @@ export const axiosAuthMiddleware: Middleware = () => (next) => (action) => {
   return next(action)
 }
 
-export const { logIn, logOut, logFailed } = actions
+export const { logIn, logOut, showError } = actions
 export const selectAuth = (state: RootState) => state.auth
 export default reducer
