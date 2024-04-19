@@ -18,6 +18,7 @@ type Credentials = {
 
 const initialState = {
   token: '',
+  loginFailed: false,
 }
 
 export async function authenticate(credentials: Credentials) {
@@ -34,6 +35,7 @@ export async function authenticate(credentials: Credentials) {
       dispatch(logIn(response.data.body.token))
     })
     .catch((error) => {
+      dispatch(logFailed())
       console.log(error)
     })
 }
@@ -43,10 +45,14 @@ const { actions, reducer } = createSlice({
   initialState,
   reducers: {
     logIn: (draft, action: PayloadAction<string>) => {
+      draft.loginFailed = false
       draft.token = action.payload
     },
     logOut: (draft) => {
       draft.token = ''
+    },
+    logFailed: (draft) => {
+      draft.loginFailed = true
     },
   },
 })
@@ -68,6 +74,6 @@ export const axiosAuthMiddleware: Middleware = () => (next) => (action) => {
   return next(action)
 }
 
-export const { logIn, logOut } = actions
+export const { logIn, logOut, logFailed } = actions
 export const selectAuth = (state: RootState) => state.auth
 export default reducer

@@ -22,7 +22,7 @@ const authPersistConfig = {
 export const store = configureStore({
   reducer: {
     auth: persistReducer(authPersistConfig, authReducer) as Reducer<
-      { token: string } & PersistPartial,
+      { token: string; loginFailed: boolean } & PersistPartial,
       UnknownAction
     >,
     profile: profileReducer,
