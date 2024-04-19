@@ -54,6 +54,9 @@ const { actions, reducer } = createSlice({
     showError: (draft) => {
       draft.loginFailed = true
     },
+    hideError: (draft) => {
+      draft.loginFailed = false
+    },
   },
 })
 
@@ -74,6 +77,6 @@ export const axiosAuthMiddleware: Middleware = () => (next) => (action) => {
   return next(action)
 }
 
-export const { logIn, logOut, showError } = actions
+export const { logIn, logOut, showError, hideError } = actions
 export const selectAuth = (state: RootState) => state.auth
 export default reducer
